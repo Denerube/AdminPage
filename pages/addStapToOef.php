@@ -1,84 +1,54 @@
 <?php
 include_once "../models/Stap.php";
 include_once "../models/Oef.php";
-session_start()?>
-<!DOCTYPE html>
-<html >
-<body>
-<form action="../AddVragenToStap.php"
-    <label>Stap nr:<?php echo $_GET["stapNr"]?></label>
-    <br>
-    <label>Soort vraag:</label>
+include_once "../models/Vraag.php";
 
-
-    <?php
-
-    //$_SESSION["listOef"] gebruikt deze session variable
-    $oef=$_SESSION["listOef"];
+session_start();
+//$_SESSION["listOef"]=$lijstoef;=> gebruikt deze session variable
+$oef=$_SESSION["listOef"];
+echo"OEF TEST";
+echo "<br/>";
+echo $oef->getNaam();
+echo "<br/>";
+//loop alle stappen af
+for ($j=1;$j<=$oef->getAantalStappen();$j++){
+   //nieuwe stap maken
     $stap=new Stap();
-    $stap->setNaam($_GET["naamVraag"]);
-    $stap->setSoortVraag($_GET["soortvraag"]);
-    $stap->setAantalVragen($_GET["aantal"]);
-    $oef->addStap($stap);
-    $_SESSION["listOef"]=$oef;
-    $aantal=$_GET["aantal"];
 
+    $stap->setNaam($_GET["naamStap".$j]);
+    $stap->setSoortVraag($_GET["soortVraag".$j]);
+    $stap->setAantalVragen($_GET["aantal".$j]);
 
+    echo "STAP TEST";
+    echo "<br/>";
+    echo "stapnaam:" .$stap->getNaam();
+    echo "<br/>";
+    echo "soortstap:".$stap->getSoortVraag();
+    echo "<br/>";
+    echo "aantalVragen:".$stap->getAantalVragen();
+    echo "<br/>";
+    //stap vullen met vragen
+    for ($y=1;$y<=$stap->getAantalVragen();$y++){
+        $vraag=new Vraag();
 
-    switch ($_GET["soortvraag"]) {
-        case "Materiaal":
-            echo "Mat";
-            ?>
-        <br>
-    <?php
+        $vraag->setNaam($_GET["nr".$j.$y]);
+        $vraag->setContent($_GET["nr".$j.$y]);
+        $vraag->setJuistOfFout($_GET["JF".$j.$y]);
+        $stap->addVraag($vraag);
+        echo "VRAAG TEST";
 
-
-            ?>
-    <?php
-            for ($j=0;$j<$aantal;$j++) {
-
-                ?>
-                <input type="file" name="Nr<?php echo $j+1?>">geef materiaal in<?php echo $j+1?> (op volgorde)</input>
-                <input type="radio" name="JF<?php echo $j+1?>" value="juist">juist</input>
-                <input type="radio"name="JF<?php echo $j+1?>"value="fout">fout</input>
-                <br>
-                <?php
-            }
-            ?>
-            <input type="hidden" name="MaxMateriaal" value="<?php echo $j ?>"/>
-        <br>
-        <input type="submit" value="vul in"></input>
-    <?php
-            break;
-        case "Keuze":
-            echo "Keuze";
-
-            ?>
-            <br>
-            <?php
-            for ($j=0;$j<$aantal;$j++) {
-
-                ?>
-                geef keuze <?php echo $j+1?> in (op volgorde)<input type="text" name="Nr<?php echo $j+1?>"></input>
-                <input type="radio" name="JF<?php echo $j+1?>" value="juist">juist</input>
-                <input type="radio"name="JF<?php echo $j+1?>"value="fout">fout</input>
-                <br>
-                <?php
-            }
-
-            ?>
-    <input type="hidden" name="MaxMateriaal" value="<?php echo $j ?>"/>
-    <br>
-    <input type="submit" value="vul in"></input>
-
-<?php
-            break;
-
+        echo "<br/>";
+        echo "naam:".$vraag->getNaam();
+        echo "<br/>";
+        echo "content:".$vraag->getContent();
+        echo "<br/>";
+        echo "JF:".$vraag->getJuistOfFout();
+        echo "<br/>";
     }
+    //stap in array steken
+    $oef->addStap($stap);
+    //opnieuw uitvoeren
+}
 
-    ?>
 
-</form>
-
-</body>
-</html>
+?>

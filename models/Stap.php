@@ -11,7 +11,7 @@ class Stap
     private $naam;
     private $aantalVragen;
     private $soortVraag;
-
+    private $vragen=array();
     /**
      * @return mixed
      */
@@ -27,7 +27,7 @@ class Stap
     {
         $this->soortVraag = $soortVraag;
     }
-    private $vragen=array();
+
 
     /**
      * @return mixed

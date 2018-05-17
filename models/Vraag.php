@@ -9,9 +9,8 @@
 class Vraag
 {
     private $naam;
-    private $soortVraag;
+
     private $juistOfFout;
-    //true = juist, false=fout!
     private $content;
 
     /**
@@ -33,18 +32,7 @@ class Vraag
     /**
      * @return mixed
      */
-    public function getSoortVraag()
-    {
-        return $this->soortVraag;
-    }
 
-    /**
-     * @param mixed $soortVraag
-     */
-    public function setSoortVraag($soortVraag)
-    {
-        $this->soortVraag = $soortVraag;
-    }
 
     /**
      * @return mixed
@@ -58,8 +46,9 @@ class Vraag
      * @param mixed $juistOfFout
      */
     public function setJuistOfFout($juistOfFout)
-    {
-        $this->juistOfFout = $juistOfFout;
+    {       $this->juistOfFout=strtoupper($juistOfFout);
+
+
     }
 
     /**
