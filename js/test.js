@@ -23,14 +23,18 @@ $.ajax({
 });
 function test( hallo ){
     console.log(hallo);
-    doc=hallo;
-    doc.test="hallowereld";
+    hallo.test="hallowereld";
+    hallo.test2="kek";
+    var test=JSON.stringify(hallo);
+    console.log("update");
+
+    console.log(test);
 
     $.ajax({
         url: url,
         type: "PUT",
         contentType: "application/json",
-        data:doc,
+        data:test,
         error: errorHandler
     })
 
