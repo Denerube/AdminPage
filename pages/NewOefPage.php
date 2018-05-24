@@ -24,7 +24,7 @@ session_start();?>
 </html>
 
 <?php
-$_SESSION["listOef"];
+$_SESSION["listOef"]=null;
 
 ?>
 <?php

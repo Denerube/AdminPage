@@ -24,7 +24,7 @@ include_once "../models/Oef.php";
  for($i=1;$i<=$aantal;$i++){
       ?>
 
-     <div>
+     <div id="<?php echo $i?>">
 
         <p> stap <?php echo $i?></p>
         <label>Stap:</label>

@@ -5,10 +5,10 @@ function errorHandler(jqXHR, textStatus, errorThrown) {
     console.log("something went wrong: " + textStatus + " " + errorThrown + " " + JSON.stringify(jqXHR));
 }
 
-var url="https://c41f0f46-dc80-44f1-a4b4-cfc752fa88b5-bluemix.cloudant.com/test/6fa44601f131e0b0a81d6d9d3af0bbff"
+var url="https://c41f0f46-dc80-44f1-a4b4-cfc752fa88b5-bluemix.cloudant.com/test/708d5f21df17db06806e80fe13a1cb26"
 
 var doc;
-
+/*
 $.ajax({
     url: url,
     dataType: 'jsonp',
@@ -55,4 +55,21 @@ e.preventDefault();
         error: errorHandler
     })
 
-});
+});*/
+
+$(document).ready(function() {
+    $("#click").on("submit",function (e) {
+        e.preventDefault();
+        var lol= $("#test").text();
+        console.log(JSON.stringify(lol));
+
+        $.ajax({
+            url: url,
+            type: "PUT",
+            contentType: "application/json",
+            data:lol,
+            error: errorHandler
+        })
+    });
+
+})

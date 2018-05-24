@@ -32,20 +32,23 @@ $("document").ready(function(){
 
 
     })
+
    $(".geefVragenIn").on("click",function (e) {
        e.preventDefault();
        console.log("uitgevoerd");
        //waarde=$(this).siblings(".soortvraag").filter("selected").text();
        var stapNr=$(this).siblings(".stapNr").val();
        var aantal=$(this).siblings(".aantal").val();
+       var nameNr;
+       var nameJF;
        console.log(stapNr);
        console.log(waarde);
        console.log(aantal);
        switch (waarde){
            case "Materiaal":
                for (var i=1;i<=aantal;i++){
-                   nameNr="nr"+stapNr+i;
-                   nameJF="JF"+stapNr+i;
+                     nameNr="nr"+stapNr+i;
+                     nameJF="JF"+stapNr+i;
                    $(this).parents("div").append("<br>"+"vraag"+ i +"<input type='file' name="+ nameNr +"> </input>");
 
                    $(this).parents("div").append(
@@ -66,7 +69,14 @@ $("document").ready(function(){
                }
                break;
        }
-
+    $("#login").on("submit",function (l) {
+        l.preventDefault();
+        $.ajax({
+            url:"",
+            data:$t
+            }
+        )
+    })
 
 
 
