@@ -1,8 +1,12 @@
 <?php
+include_once "../models/Stap.php";
+include_once "../models/Oef.php";
+include_once "../models/Vraag.php";
+include_once "../models/User.php";
 session_start();
 
 
-var_dump($oef);
+
 
 if (isset($_SESSION["user"])){
     if($_SESSION["user"]==null){
@@ -14,14 +18,10 @@ if (isset($_SESSION["user"])){
 else{
     header("location:LoginPage.php");
 }
-?>
-<?php
 
-$oef=$_SESSION["listOef"];
-include_once "../models/Stap.php";
-include_once "../models/Oef.php";
-include_once "../models/Vraag.php";
 
+$oef= $_SESSION["listOef"];
+//echo $oef->getNaam();
 ?>
 <html>
 <header>
@@ -32,6 +32,7 @@ include_once "../models/Vraag.php";
 
 <?php
 //$_SESSION["listOef"]=$lijstoef;=> gebruikt deze session variable
+
 
 ?>
 <?php // we gaan de oef afdrukken?>
@@ -50,17 +51,18 @@ for ($j=1;$j<=$oef->getAantalStappen();$j++){
     $stap->setNaam($_GET["naamStap".$j]);
     $stap->setSoortVraag($_GET["soortVraag".$j]);
     $stap->setAantalVragen($_GET["aantal".$j]);
+    $stap->setFeedback($_GET["feedback".$j]);
     ?>
     <?php//display the stap?>
     <div id="stap<?php echo $j?>">
 
     <h1>"STAP TEST";</h1>
 
-    <p>stapnaam: <?php echo "stapnaam:" .$stap->getNaam();?></p>
+    <p>stapnaam: <?php echo $stap->getNaam();?></p>
 
-    <p>soort stap <?php echo "soortstap:".$stap->getSoortVraag();?></p>
+    <p>soort stap <?php echo $stap->getSoortVraag();?></p>
 
-    <p>aantalVragen <?php echo "aantalVragen:".$stap->getAantalVragen();?></p>
+    <p>aantalVragen <?php echo $stap->getAantalVragen();?></p>
     </div>
 <?php
     //stap vullen met vragen
@@ -86,19 +88,73 @@ for ($j=1;$j<=$oef->getAantalStappen();$j++){
     $oef->addStap($stap);
     //opnieuw uitvoeren
 
-}
-//json klaarzetten om te pushen naar DB
-    ini_set("allow_url_fopen", 1);
-    $json = file_get_contents('https://ceb1f13c-d64d-4ddc-a4b4-12833d7843eb-bluemix.cloudant.com/projectmobileapps/c0a82b412d43ff4cbb362eccfef0d002');
-    $obj=json_decode($json,true);
-    ?>
-    <p id="json" style="visibility: hidden"></p>
-    <button id="click">click me</button>
-</div>
+}?>
 
+</div>
+<p>ale dan</p>
 </body>
+
+<?php
+//json klaarzetten om te pushen naar DB
+    //json uit de db trekken
+    ini_set("allow_url_fopen", 1);
+    $json = file_get_contents('https://c41f0f46-dc80-44f1-a4b4-cfc752fa88b5-bluemix.cloudant.com/testdatabase/82e256d2d40c54bac03da4badfd243c3');
+    $obj=json_decode($json,true);
+    $stappen=null;
+    $beschrijving=null;
+    var_dump($oef);
+    for ($c=0;$c< $oef->getAantalStappen();$c++){
+        $kijk=$oef->getStappen()[$c]->getSoortVraag();
+        $beschrijving=array("beschrijving"=>$oef->getStappen()[$c]->getNaam());
+        switch ($kijk) {
+            case "KEUZEVRAAG":
+                $antwoorden=array();
+                $mog=array();
+                for ($k=0;$k<$oef->getStappen()[$c]->getAantalVragen();$k++) {
+
+
+                    if($oef->getStappen()[$c]->getVragen()[$k]->getJuistOfFout()=="JUIST") {
+                        //juiste antwoorden invoegen
+
+                        array_push($antwoorden,$oef->getStappen()[$c]->getVragen()[$k]->getContent());
+
+                        //$antwoord = array("antwoord" => $oef->getStappen()[$c]->getVragen()[$k]->getContent());
+                    }
+                    elseif($oef->getStappen()[$c]->getVragen()[$k]->getJuistOfFout()=="FOUT"){
+
+                        array_push($mog,$oef->getStappen()[$c]->getVragen()[$k]->getContent());
+                        //$mogelijheden=array("mogelijkheden"=>$mog);
+                    }
+
+
+                }
+                break;
+    }
+        $feedback=$oef->getStappen()[$c]->getFeedback();
+        $type=$oef->getStappen()[$c]->getSoortVraag();
+        $vraag=$oef->getStappen()[$c]->getNaam();
+
+        $antwoord=array("correct"=>$antwoorden,"mogelijkheden"=>$mog);
+        //$displayantwoorde=array("antwoord"=>$antwoord);
+        $rest=array("antwoord"=>$antwoord,"feedback"=>$feedback,"type"=>$type,"vraag"=>$vraag);
+
+    }
+
+
+
+
+    //json file klaarzetten om naar JS te sture
+    $obj["overzicht"][$oef->getNaam()][$oef->getStappen()[$c]->getNaam()]=$rest;
+    //var_dump($obj);
+    $pas=json_encode($obj,true);
+    ?>
+
+<form id="click">
+    <p  style="display: none" id="test" ><?php echo  $pas?></p>
+    <input type="submit">
+</form>
 <footer>
-<script src="../js/jquery-3.1.1.min.js"></script>
-<script src="../js/test.js"></script>
+    <script src="../js/jquery-3.1.1.min.js"></script>
+    <script src="../js/test.js"></script>
 </footer>
 </html>

@@ -45,19 +45,8 @@ $("document").ready(function(){
        console.log(waarde);
        console.log(aantal);
        switch (waarde){
-           case "Materiaal":
-               for (var i=1;i<=aantal;i++){
-                     nameNr="nr"+stapNr+i;
-                     nameJF="JF"+stapNr+i;
-                   $(this).parents("div").append("<br>"+"vraag"+ i +"<input type='file' name="+ nameNr +"> </input>");
 
-                   $(this).parents("div").append(
-                       "<input type=radio name="+nameJF+" value='juist'>juist</input>" +
-                       "<input type=radio name="+nameJF+" value='fout'>fout</input>");
-               }
-
-               break;
-           case "Keuze":
+           case "Keuzevraag":
                for (var i=1;i<=aantal;i++){
                    nameNr="nr"+stapNr+i;
                    nameJF="JF"+stapNr+i;

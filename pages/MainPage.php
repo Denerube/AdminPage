@@ -1,5 +1,10 @@
 <?php
 session_start();
+include_once "../models/Stap.php";
+include_once "../models/Oef.php";
+include_once "../models/Vraag.php";
+include_once "../models/User.php";
+
 if (isset($_SESSION["user"])){
     if($_SESSION["user"]==null){
         header("location:LoginPage.php");

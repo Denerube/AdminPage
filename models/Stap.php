@@ -12,6 +12,23 @@ class Stap
     private $aantalVragen;
     private $soortVraag;
     private $vragen=array();
+    private $feedback;
+
+    /**
+     * @return mixed
+     */
+    public function getFeedback()
+    {
+        return $this->feedback;
+    }
+
+    /**
+     * @param mixed $feedback
+     */
+    public function setFeedback($feedback)
+    {
+        $this->feedback = $feedback;
+    }
     /**
      * @return mixed
      */
@@ -25,7 +42,8 @@ class Stap
      */
     public function setSoortVraag($soortVraag)
     {
-        $this->soortVraag = $soortVraag;
+
+        $this->soortVraag = strtoupper($soortVraag);
     }
 
 

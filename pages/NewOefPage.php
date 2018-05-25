@@ -1,5 +1,10 @@
 <?php
+include_once "../models/Stap.php";
+include_once "../models/Oef.php";
+include_once "../models/Vraag.php";
+include_once "../models/User.php";
 session_start();
+
 if (isset($_SESSION["user"])){
     if($_SESSION["user"]==null){
         header("location:LoginPage.php");
@@ -22,9 +27,9 @@ else{
 
 <h1>Maak nieuwe oefening</h1>
 <form id="root" action="addOefPage.php" method="get">
-    <label>Naam nieuwe Oefening</label>
+    <label>Naam nieuw labo</label>
     <input name="naamOef" type="text">
-    <label>Hoeveel stappen bevat de nieuwse oefening?</label>
+    <label>Hoeveel stappen bevat het nieuwse labo?</label>
     <input name="aantalStappn" type="text" required>
     <input id="addform" type="submit"></input>
 </form>
@@ -36,7 +41,7 @@ else{
 </html>
 
 <?php
-$_SESSION["listOef"]=null;
+$_SESSION["listOef"]= new Oef();
 
 ?>
 <?php

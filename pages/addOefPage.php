@@ -1,4 +1,8 @@
 <?php
+include_once "../models/Oef.php";
+include_once "../models/Stap.php";
+include_once "../models/Vraag.php";
+include_once "../models/User.php";
 session_start();
 if (isset($_SESSION["user"])){
     if($_SESSION["user"]==null){
@@ -21,15 +25,15 @@ else{
 <body>
 <h1>Wat wilt u doen?</h1>
 <?php
-include_once "../models/Oef.php";
-//$_SESSION["listOef"]=$lijstoef;=> gebruikt deze session variable
-    $oef=new Oef();
+
+
+    //$_SESSION["listOef"]=$lijstoef;=> gebruikt deze session variable
+    $oef=$_SESSION["listOef"];
     $oef->setNaam($_GET["naamOef"]);
     $oef->setAantalStappen($_GET["aantalStappn"]);
-    $_SESSION["listOef"]=$oef;
+
 
     $aantal=$_GET["aantalStappn"];
-    $oef->setAantalStappen($aantal);
 ?>
 <form action="addStapToOef.php" method="get">
 <?php
@@ -43,12 +47,13 @@ include_once "../models/Oef.php";
              <label>Stap Nr:</label>
              <input readonly name="stapNr" class="stapNr" value="<?php echo $i?>" />
              <label>Naam stap</label>
-             <input type="text" name=<?php echo "naamStap".$i?>/>
+             <input type="text" name="<?php echo "naamStap".$i?>"/>
+            <label>feedback Stap</label>
+            <input type="text" name="<?php echo "feedback".$i?>"/>
         <label >Soort vraag</label>
         <select class="soortVraag" name=<?php echo "soortVraag".$i?>>
             <option value="" selected disabled hidden>Kies Soort vraag</option>
-            <option value="Materiaal">Materiaal</option>
-            <option value="Keuze">Keuze</option>
+            <option value="Keuzevraag">Keuzevraag</option>
         </select>
              <br/>
              <label>Hoeveel verschillende opties zijn er?</label>
@@ -62,7 +67,7 @@ include_once "../models/Oef.php";
     <?php
 
   }
-
+$_SESSION["listOef"]=$oef;
 ?>
     <input type="submit" >HALLO</input>
 
