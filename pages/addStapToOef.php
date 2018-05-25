@@ -1,8 +1,20 @@
 <?php
+session_start();
+if (isset($_SESSION["user"])){
+    if($_SESSION["user"]==null){
+        header("location:LoginPage.php");
+    }else{
+        //doe gwn niets
+    }
+}
+else{
+    header("location:LoginPage.php");
+}
+?>
+<?php
 include_once "../models/Stap.php";
 include_once "../models/Oef.php";
 include_once "../models/Vraag.php";
-session_start();
 
 ?>
 <html>

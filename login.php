@@ -1,5 +1,6 @@
 <?php
-//TODO login
+session_start();
+include "models/User.php";
 function post($email,$password){
     $url = 'http://dtsl.ehb.be/~stijn.rooselaers/PHP-Slim-Restful/api/index.php/login';
 // use key 'http' even if you send the request to https://...
@@ -21,16 +22,28 @@ function post($email,$password){
 //MAIN
 $result=post($_POST["loginName"],$_POST["loginPas"]);
 $json=json_decode($result,true);
-
+$user=new User();
+$_SESSION["user"]=null;
 
 if( $result==NULL) {
-    echo "null";
+
+    $_SESSION["user"]=null;
+    $user= NULL;
+    header("location:pages/LoginPage.php");
+
+
     }elseif($json["userData"]["isAdmin"]==1){
-    echo"gelukt";
+    //var_dump($json);
+    $user->setUserName($json["userData"]["email"]);
+    $user->setToken($json["userData"]["token"]);
+    $user->setIsAdmin($json["userData"]["isAdmin"]);
+    $_SESSION["user"]=$user;
     header("location:pages/Mainpage.php");
-}
+    }
     else{
-    echo "fuck off youre not a real admin";
+        $_SESSION["user"]=null;
+        header("location:pages/LoginPage.php");
+
     }
 
 ?>
