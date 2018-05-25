@@ -1,5 +1,9 @@
 <?php
 session_start();
+
+
+var_dump($oef);
+
 if (isset($_SESSION["user"])){
     if($_SESSION["user"]==null){
         header("location:LoginPage.php");
@@ -12,6 +16,8 @@ else{
 }
 ?>
 <?php
+
+$oef=$_SESSION["listOef"];
 include_once "../models/Stap.php";
 include_once "../models/Oef.php";
 include_once "../models/Vraag.php";
@@ -27,7 +33,6 @@ include_once "../models/Vraag.php";
 <?php
 //$_SESSION["listOef"]=$lijstoef;=> gebruikt deze session variable
 
-$oef=$_SESSION["listOef"];
 ?>
 <?php // we gaan de oef afdrukken?>
 <div id="overzicht">
@@ -82,7 +87,12 @@ for ($j=1;$j<=$oef->getAantalStappen();$j++){
     //opnieuw uitvoeren
 
 }
+//json klaarzetten om te pushen naar DB
+    ini_set("allow_url_fopen", 1);
+    $json = file_get_contents('https://ceb1f13c-d64d-4ddc-a4b4-12833d7843eb-bluemix.cloudant.com/projectmobileapps/c0a82b412d43ff4cbb362eccfef0d002');
+    $obj=json_decode($json,true);
     ?>
+    <p id="json" style="visibility: hidden"></p>
     <button id="click">click me</button>
 </div>
 

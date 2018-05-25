@@ -27,7 +27,6 @@ include_once "../models/Oef.php";
     $oef->setNaam($_GET["naamOef"]);
     $oef->setAantalStappen($_GET["aantalStappn"]);
     $_SESSION["listOef"]=$oef;
-    //array_push($_SESSION["listOef"],$oef);
 
     $aantal=$_GET["aantalStappn"];
     $oef->setAantalStappen($aantal);
