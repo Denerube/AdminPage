@@ -5,7 +5,7 @@ function errorHandler(jqXHR, textStatus, errorThrown) {
     console.log("something went wrong: " + textStatus + " " + errorThrown + " " + JSON.stringify(jqXHR));
 }
 
-var url="https://c41f0f46-dc80-44f1-a4b4-cfc752fa88b5-bluemix.cloudant.com/testdatabase/82e256d2d40c54bac03da4badfd243c3"
+var url="https://ceb1f13c-d64d-4ddc-a4b4-12833d7843eb-bluemix.cloudant.com/projectmobileapps/c0a82b412d43ff4cbb362eccfef0d002"
 
 
 
