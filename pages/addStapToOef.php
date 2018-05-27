@@ -38,9 +38,8 @@ $oef= $_SESSION["listOef"];
 <?php // we gaan de oef afdrukken?>
 <div id="overzicht">
 <div class="infoOef">
-<h1>"OEF TEST";</h1>
-<p>Naam oef:<?php echo $oef->getNaam();?></p>
-    <p>aantal stappen :<?php echo $oef->getAantalStappen();?></p>
+<p>er wordt naar de databse gepushed even geduld</p>
+
 </div>
 
     <?php
@@ -56,13 +55,7 @@ for ($j=1;$j<=$oef->getAantalStappen();$j++){
     <?php//display the stap?>
     <div id="stap<?php echo $j?>">
 
-    <h1>"STAP TEST";</h1>
 
-    <p>stapnaam: <?php echo $stap->getNaam();?></p>
-
-    <p>soort stap <?php echo $stap->getSoortVraag();?></p>
-
-    <p>aantalVragen <?php echo $stap->getAantalVragen();?></p>
     </div>
 <?php
     //stap vullen met vragen
@@ -75,11 +68,7 @@ for ($j=1;$j<=$oef->getAantalStappen();$j++){
         $stap->addVraag($vraag);
         ?>
         <div id="vraag <?php $y?>">
-            <h2>VRAAG TEST</h2>
-            <p>Naam: <?php echo $vraag->getNaam()?></p>
 
-            <p>Content:<?php echo $vraag->getContent() ?></p>
-            <p>JF:<?php echo $vraag->getJuistOfFout()?></p>
         </div>
         <?php
 

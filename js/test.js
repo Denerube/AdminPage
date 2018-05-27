@@ -58,7 +58,7 @@ e.preventDefault();
 });*/
 
 $(document).ready(function() {
-    $("#click").on("submit",function (e) {
+
         e.preventDefault();
         var lol= $("#test").text();
         console.log(JSON.stringify(lol));
@@ -69,7 +69,9 @@ $(document).ready(function() {
             contentType: "application/json",
             data:lol,
             error: errorHandler
-        })
-    });
+
+        });
+    window.location = '../pages/MainPage.php';
+
 
 })
